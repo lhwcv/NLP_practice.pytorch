@@ -66,6 +66,29 @@ model| with_glove| acc
 TextCNN| False| 76.92
 TextCNN| True| 81.24
 
+### demo predict 
+
+you may fisrt train to get the models.
+```
+cd kg_practice/L3/
+python predict.py
+
+```
+
+
+```
+Now you can input a sentence to pred ==> 
+==== for example ===
+[Text]:  You just make me so sad and I have to leave you
+[Pred]:  negative
+[Text]: I love you so much , I am so happy
+I love you so much , I am so happy
+[Pred]:  positive
+[Text]: you make me so sad and unhappy
+you make me so sad and unhappy
+[Pred]:  negative
+```
+
 
 
 
