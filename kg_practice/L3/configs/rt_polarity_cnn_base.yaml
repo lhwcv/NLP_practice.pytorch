@@ -1,0 +1,24 @@
+SYSTEM:
+    DEVICE: 'cuda'
+    global_data_root: '../../global_data/'
+DATA:
+    dataset_name: "RT_Polarity"
+    data_root: './local_data/'
+
+MODEL:
+    embed_dim: 300
+    num_classes: 2
+    init_embed_with_glove: False
+    hidden_n: 128
+    dropout: 0.5
+
+TRAIN:
+    num_train_epochs: 40
+    learning_rate: 0.001
+    lr_decay_gamma: 0.2
+    milestones: [10, 20]
+    milestones_in_epo: True
+    warmup_steps: 500
+    batch_size: 32
+    early_stop_n: 10
+    save_dir: './exp/text_cnn/'

@@ -1,0 +1,37 @@
+DATA:
+  data_root: ./local_data/
+  dataset_name: RT_Polarity
+MODEL:
+  dropout: 0.5
+  embed_dim: 300
+  hidden_n: 128
+  init_embed_with_glove: true
+  max_seq_len: 50
+  model_name: ''
+  num_classes: 2
+SYSTEM:
+  DEVICE: cuda
+  NUM_WORKERS: 2
+  global_data_root: ../../global_data/
+TEST:
+  batch_size: 256
+  model_load_path: ''
+  save_dir: ''
+TRAIN:
+  adam_epsilon: 1.0e-06
+  batch_size: 32
+  early_stop_n: 10
+  gradient_accumulation_steps: 1
+  learning_rate: 0.001
+  load_from: ''
+  log_steps: 200
+  lr_decay_gamma: 0.2
+  milestones:
+  - 10
+  - 20
+  milestones_in_epo: true
+  num_train_epochs: 40
+  save_dir: ./exp/text_cnn_with_glove/
+  warmup_steps: 500
+  weight_decay: 0.0
+
