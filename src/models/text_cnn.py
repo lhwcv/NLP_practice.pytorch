@@ -63,6 +63,7 @@ class Text_CNN(nn.Module):
         self.embedding.init_embedding()
         self.fc.weight.data.uniform_(-initrange, initrange)
         self.fc.bias.data.zero_()
+        #nn.init.kaiming_normal_(self.fc.weight, mode='fan_out')
 
     def forward(self, text):
         #print(text)

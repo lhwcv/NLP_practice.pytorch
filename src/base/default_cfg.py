@@ -35,13 +35,15 @@ _C.TEST.model_load_path = ''
 _C.TEST.save_dir = ''
 
 _C.MODEL = CN()
-_C.MODEL.model_name = ''
+_C.MODEL.model_name = 'Text_CNN'
 _C.MODEL.num_classes = 2
 _C.MODEL.embed_dim = 300
 _C.MODEL.max_seq_len = 50
 _C.MODEL.init_embed_with_glove = True
 _C.MODEL.hidden_n = 128
 _C.MODEL.dropout = 0.5
+_C.MODEL.num_layers = 1
+_C.MODEL.rnn_type = "LSTM"
 
 def get_cfg_defaults(merge_from = None):
   cfg =  _C.clone()
