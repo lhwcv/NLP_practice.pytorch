@@ -4,15 +4,17 @@ SYSTEM:
 DATA:
     dataset_name: "SogouNews"
     data_root: './local_data/'
+    min_freq: 10
 
 MODEL:
     embed_dim: 300
     num_classes: 5
     init_embed_with_glove: True
-    hidden_n: 128
-    dropout: 0.5
-    num_layers: 1
+    hidden_n: 256
+    dropout: 0.1
+    num_layers: 2
     rnn_type: "LSTM"
+    max_seq_len: 400
 
 TRAIN:
     num_train_epochs: 40
@@ -21,6 +23,6 @@ TRAIN:
     milestones: [10, 20]
     milestones_in_epo: True
     warmup_steps: 100
-    batch_size: 32
-    early_stop_n: 5
+    batch_size: 24
+    early_stop_n: 3
     save_dir: './exp/sougou_model_'

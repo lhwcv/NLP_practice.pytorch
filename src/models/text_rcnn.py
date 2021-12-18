@@ -25,7 +25,7 @@ class Text_RCNN(nn.Module):
                                   num_layers = num_layers,
                                   dropout = dropout,
                                   bidirectional = True)
-        self.drop = nn.Dropout(dropout)
+        #self.drop = nn.Dropout(dropout)
         self.conv = nn.Conv1d(2 * hidden_n + embed_dim, hidden_n, 1)
         self.fc = nn.Linear(in_features= hidden_n,
                             out_features=num_class)
@@ -37,7 +37,7 @@ class Text_RCNN(nn.Module):
 
         fea = fea.permute(0, 2, 1)
         fea = torch.relu(self.conv(fea) ) #(b, hidden_size, seq_len)
-        fea = self.drop(fea)
+        #fea = self.drop(fea)
 
         ksize = fea.shape[-1]
         fea = nn.functional.max_pool2d(fea, kernel_size=(1, ksize))

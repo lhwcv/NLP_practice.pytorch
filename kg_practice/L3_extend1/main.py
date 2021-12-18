@@ -39,10 +39,12 @@ def get_args():
 
 def main(cfg):
 
-    ngrams = 1
+    ngrams = 2 if cfg.MODEL.model_name=='Text_BowModel' else 1
     device = cfg.SYSTEM.DEVICE
     embed_dim = cfg.MODEL.embed_dim
     save_dir = cfg.TRAIN.save_dir
+    max_seq_len = 2 * cfg.MODEL.max_seq_len if cfg.MODEL.model_name=='Text_BowModel' else cfg.MODEL.max_seq_len
+    min_freq = cfg.DATA.min_freq
 
     create_dir_maybe(save_dir)
 
@@ -57,7 +59,9 @@ def main(cfg):
 
     train_iter = get_dataset(cfg.DATA.dataset_name, cfg.DATA.data_root, 'train')
 
-    vocab = build_vocab_from_iterator(yield_tokens(train_iter, ngrams), specials=["<unk>"])
+    vocab = build_vocab_from_iterator(yield_tokens(train_iter, ngrams),
+                                      min_freq = min_freq,
+                                      specials = ["<unk>"])
     vocab.set_default_index(vocab["<unk>"])
 
     with open(save_dir+'/vocab.txt','w') as f:
@@ -81,7 +85,7 @@ def main(cfg):
     #             text_tensor[_inx][:processed_text.size(0)] = processed_text
     #
     #     label_list = torch.tensor(label_list, dtype=torch.int64)
-    #     return label_list.to(device), text_tensor.to(device)
+    #     return label_list, text_tensor
 
     ## https://github.com/pytorch/text/blob/master/examples/legacy_tutorial/migration_tutorial.ipynb
     # we process the raw text data and add padding to dynamically match the longest sentence in a batch
@@ -93,8 +97,12 @@ def main(cfg):
             text_list.append(processed_text)
         #print(text_list)
         ## batch first
-        return torch.tensor(label_list), \
-               pad_sequence(text_list, padding_value=vocab.get_default_index()).t_()
+        label =  torch.tensor(label_list)
+        text  =  pad_sequence(text_list, padding_value=vocab.get_default_index()).t_()
+        if text.size(1) > max_seq_len:
+            text = text[:, :max_seq_len]
+        return label, text
+
 
     train_iter = get_dataset(cfg.DATA.dataset_name, cfg.DATA.data_root, 'train')
     dev_iter = get_dataset(cfg.DATA.dataset_name,
@@ -104,7 +112,7 @@ def main(cfg):
     train_dataset = to_map_style_dataset(train_iter)
     dev_dataset = to_map_style_dataset(dev_iter)
 
-    train_loader = get_dataloader(train_dataset, cfg, collate_fn = collate_batch)
+    train_loader = get_dataloader(train_dataset, cfg, collate_fn = collate_batch, shuffle=True)
     dev_loader   = get_dataloader(dev_dataset, cfg, collate_fn = collate_batch)
 
     ## model and word vectors

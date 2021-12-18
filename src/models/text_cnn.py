@@ -87,8 +87,8 @@ class Text_CNN(nn.Module):
             pools.append(fea)
 
         x = torch.cat(pools, dim=-1)
-        x = self.fc(x)
         x = self.drop(x)
+        x = self.fc(x)
         return  x
 
 

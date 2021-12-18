@@ -29,12 +29,12 @@ def get_dataset(dataset_name,data_dir, split = 'train'):
         raise  NotImplementedError('Dataset Type not supported!')
     return  DATASETS[dataset_name](root = data_dir, split=split)
 
-def get_dataloader(dataset_ins, cfg, collate_fn=None):
+def get_dataloader(dataset_ins, cfg, collate_fn=None, shuffle = False):
     dataloader = DataLoader(
         dataset_ins,
         batch_size = cfg.TRAIN.batch_size,
-        shuffle = False,
+        shuffle = shuffle,
         num_workers = cfg.SYSTEM.NUM_WORKERS,
-        drop_last=False,
+        drop_last = False,
         collate_fn = collate_fn)
     return  dataloader

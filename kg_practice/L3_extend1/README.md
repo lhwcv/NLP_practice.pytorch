@@ -79,14 +79,15 @@ CUDA_VISIBLE_DEVICES=0 python main.py --config ./configs/sougou_news_base.yaml -
 results will save in ./exp/
 
 
-### results
+### results in SougouNews
 model| acc
 |---|:---:
-TextCNN| training..
-TextLSTM|  training..
-TextFastText| training..
-TextRCNN| training..
-TextTCN| training..
+TextCNN| 96.52
+TextLSTM|  96.34
+TextFastText| 95.19
+TextFastText + bi-gram| 96.35
+TextRCNN| 94.89
+TextTCN| 94.66
 
 
 

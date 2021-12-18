@@ -11,6 +11,7 @@ _C.SYSTEM.global_data_root = '../../data/'
 _C.DATA = CN()
 _C.DATA.dataset_name = 'ExpW'
 _C.DATA.data_root = './data/'
+_C.DATA.min_freq = 1
 
 _C.TRAIN = CN()
 _C.TRAIN.batch_size = 4
