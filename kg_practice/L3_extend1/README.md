@@ -87,7 +87,7 @@ TextLSTM|  96.34
 TextFastText| 95.19
 TextFastText + bi-gram| 96.35
 TextRCNN| 94.89
-TextTCN| 94.66
+TextTCN| 95.23
 
 
 
