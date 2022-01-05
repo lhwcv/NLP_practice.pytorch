@@ -1,17 +1,20 @@
 DATA:
-  data_root: ./local_data/
-  dataset_name: RT_Polarity
+  data_root: ./local_data/waybill/
+  dataset_name: waybill
+  min_freq: 1
 MODEL:
-  dropout: 0.5
+  dropout: 0.1
   embed_dim: 300
   hidden_n: 128
   init_embed_with_glove: false
   max_seq_len: 50
-  model_name: ''
+  model_name: Text_CNN
   num_classes: 2
+  num_layers: 1
+  rnn_type: LSTM
 SYSTEM:
-  DEVICE: cuda
-  NUM_WORKERS: 2
+  DEVICE: cpu
+  NUM_WORKERS: 0
   global_data_root: ../../global_data/
 TEST:
   batch_size: 256
@@ -19,8 +22,8 @@ TEST:
   save_dir: ''
 TRAIN:
   adam_epsilon: 1.0e-06
-  batch_size: 32
-  early_stop_n: 10
+  batch_size: 16
+  early_stop_n: 4
   gradient_accumulation_steps: 1
   learning_rate: 0.001
   load_from: ''
@@ -31,7 +34,7 @@ TRAIN:
   - 20
   milestones_in_epo: true
   num_train_epochs: 40
-  save_dir: ./exp/text_cnn/
+  save_dir: ./exp/lstm_crf/
   warmup_steps: 500
   weight_decay: 0.0
 

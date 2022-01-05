@@ -113,7 +113,7 @@ def main(cfg):
                      filter_kerners=[3,4,5],
                      hidden_n = hidden_n,
                      dropout = dropout).to(device)
-    model = model.cuda()
+    model = model.to(device)
 
     if cfg.MODEL.init_embed_with_glove:
         print('==> init embedding with glove..')

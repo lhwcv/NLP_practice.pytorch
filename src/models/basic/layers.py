@@ -25,6 +25,7 @@ class EmbeddingLayer(nn.Module):
         self.dropout = nn.Dropout(dropout)
         self.vocab_size = vocab_size
         self.emb_dim = emb_dim
+        self.init_embedding()
 
     def init_embedding(self,
                        word_emb_array = None,

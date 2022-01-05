@@ -39,9 +39,9 @@ class Text_RNN(nn.Module):
         self.fc_out = nn.Linear(in_features=hidden_n,
                             out_features=num_class)
 
-    def forward(self, text):
+    def forward(self, text, lengths = None, with_pad_unpad = False):
         x = self.embedding(text)
-        x = self.encoder(x)
+        x = self.encoder.forward(x, lengths, with_pad_unpad)
         x = torch.tanh(self.fc(x))
         x = self.fc_out(x)
         return x
@@ -51,8 +51,8 @@ if __name__ == '__main__':
     model = Text_RNN(vocab_size=100, num_class=2, num_layers=2)
     y = model(x)
     print(y.shape)
-
-    from thop import profile
-    flops, params = profile(model, inputs=(x,))
-    print('Total params: %.2fM' % (params / 1000000.0))
-    print('Total flops: %.2fM' % (flops / 1000000.0))
+    #
+    # from thop import profile
+    # flops, params = profile(model, inputs=(x,))
+    # print('Total params: %.2fM' % (params / 1000000.0))
+    # print('Total flops: %.2fM' % (flops / 1000000.0))

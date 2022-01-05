@@ -4,3 +4,5 @@ torchvision
 torchtext>=0.11.0
 sklearn
 tqdm >= 4.6
+yacs >= 0.1.8
+seqeval

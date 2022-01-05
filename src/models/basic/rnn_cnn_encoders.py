@@ -1,5 +1,6 @@
 import  torch
 import torch.nn  as nn
+from torch.nn.utils.rnn import pad_packed_sequence, pack_padded_sequence
 
 class RNNEncoder(nn.Module):
     r"""
@@ -50,13 +51,20 @@ class RNNEncoder(nn.Module):
             return  2 * self.hidden_size
         return self.hidden_size
 
-    def forward(self, x):
+    def forward(self, x,lengths = None, with_pad_unpad = False):
         """
 
         :param x:  [batch_size, seq_len, input_size]
         :return:  [batch_size, hidden_size]
         """
-        out, _ = self.rnn_layers(x)
+        if with_pad_unpad:
+            assert  lengths is not  None, 'when with_pad_unpad, lengths should not be None!'
+        if with_pad_unpad:
+            packed = pack_padded_sequence(x, lengths, batch_first=True)
+            out, _ = self.rnn_layers(packed)
+            out, _ = pad_packed_sequence(out, batch_first=True)
+        else:
+            out, _ = self.rnn_layers(x)
 
         if self.pooling_type is not  None:
             if self.pooling_type == 'mean':

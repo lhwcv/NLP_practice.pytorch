@@ -117,7 +117,7 @@ def main(cfg):
 
     ## model and word vectors
     model = build_model(cfg, vocab_size=len(vocab)).to(device)
-    model = model.cuda()
+    model = model.to(device)
 
     if cfg.MODEL.init_embed_with_glove:
         print('==> init embedding with glove..')
